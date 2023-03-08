@@ -17,7 +17,6 @@ import { toast } from 'react-toastify';
 import BlockchainExplorer from './BlockchainExplorer.js';
 import ResponsiveDrawer from './Sidebar.js';
 import { Box } from '@mui/material';
-import { DashboardSidebar } from './dashboard-sidebar.js';
 
 class ManageAuctions extends Component {
 
@@ -151,7 +150,7 @@ class ManageAuctions extends Component {
             
             width: '100%'
           }}>
-          <DashboardSidebar />
+          <ResponsiveDrawer />
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-6 mb-3">
