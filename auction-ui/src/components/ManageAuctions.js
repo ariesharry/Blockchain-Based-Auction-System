@@ -15,6 +15,9 @@ import AuctionService from '../services/Auctions.js';
 import { SITE_NAME } from '../services/Constants.js';
 import { toast } from 'react-toastify';
 import BlockchainExplorer from './BlockchainExplorer.js';
+import ResponsiveDrawer from './Sidebar.js';
+import { Box } from '@mui/material';
+import { DashboardSidebar } from './dashboard-sidebar.js';
 
 class ManageAuctions extends Component {
 
@@ -141,44 +144,53 @@ class ManageAuctions extends Component {
       && !this.state.auctionRequests.length && !this.state.openAuctions.length;
 
     return (
-      <div>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-md-6 mb-3">
-              <h1 className="title text-primary">Manage Auctions</h1>
+      <>
+        <Box sx={{
+            display: 'flex',
+            flex: '1 1 auto',
+            
+            width: '100%'
+          }}>
+          <DashboardSidebar />
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-md-6 mb-3">
+                <h1 className="title text-primary">Manage Auctions</h1>
+              </div>
+              {this.state.newRequestCount > 0 && 
+              <div className="col-md-6 mb-3 d-flex align-items-center justify-content-end">
+                <button type="button" className="btn btn-primary my-auto" onClick={this.reloadAuctions} data-toggle="tooltip" title="Click here to load new request.">
+                  Refresh <span className="badge badge-danger">{this.state.newRequestCount}</span>
+                </button>
+              </div>}
             </div>
-            {this.state.newRequestCount > 0 && <div className="col-md-6 mb-3 d-flex align-items-center justify-content-end">
-              <button type="button" className="btn btn-primary my-auto" onClick={this.reloadAuctions} data-toggle="tooltip" title="Click here to load new request.">
-                Refresh <span className="badge badge-danger">{this.state.newRequestCount}</span>
-              </button>
-            </div>}
+            <table className="table auctionTable table-hover text-center">
+              <thead>
+                <tr>
+                  <th scope="col">Artwork</th>
+                  <th scope="col">Auction ID</th>
+                  <th scope="col">NFT ID</th>
+                  <th scope="col">Seller ID</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Reserve Price</th>
+                  <th scope="col">Buy-It-Now Price</th>
+                  <th scope="col">Request Date / Timeleft</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.renderOpenAuctions()}
+                {this.renderAuctionRequests()}
+                {noRecordsFound && <tr className="auction">
+                  <td colSpan="9" className="text-center text-info">No information found.</td>
+                </tr>}
+              </tbody>
+            </table>
           </div>
-          <table className="table auctionTable table-hover text-center">
-            <thead>
-              <tr>
-                <th scope="col">Artwork</th>
-                <th scope="col">Auction ID</th>
-                <th scope="col">NFT ID</th>
-                <th scope="col">Seller ID</th>
-                <th scope="col">Status</th>
-                <th scope="col">Reserve Price</th>
-                <th scope="col">Buy-It-Now Price</th>
-                <th scope="col">Request Date / Timeleft</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.renderOpenAuctions()}
-              {this.renderAuctionRequests()}
-              {noRecordsFound && <tr className="auction">
-                <td colSpan="9" className="text-center text-info">No information found.</td>
-              </tr>}
-            </tbody>
-          </table>
-        </div>
-        <OpenAuction {...this.state.selectedAuction} refreshAuctions={this.getAuctions} />
-        <BlockchainExplorer onSocketMessage={this.updateOnSocketMessage} />
-      </div>
+          <OpenAuction {...this.state.selectedAuction} refreshAuctions={this.getAuctions} />
+          <BlockchainExplorer onSocketMessage={this.updateOnSocketMessage} />
+        </Box>
+      </>
     );
   }
 }

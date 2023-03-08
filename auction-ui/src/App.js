@@ -16,6 +16,7 @@ import UtilsService from './services/Utils.js';
 import { Outlet } from 'react-router-dom';
 import { SITE_NAME } from './services/Constants.js';
 import { ToastContainer } from 'react-toastify';
+// import ResponsiveDrawer from './components/Sidebar.js';
 
 class App extends Component {
 
@@ -49,6 +50,7 @@ class App extends Component {
 
     return (
       <div>
+        {/* <ResponsiveDrawer /> */}
         <Outlet />
         <ToastContainer
           containerId="tostErrors"
