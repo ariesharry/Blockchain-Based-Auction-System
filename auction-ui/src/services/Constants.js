@@ -32,7 +32,7 @@ export const CURRENT_USER = () => JSON.parse(localStorage.getItem('user')) || {}
 export const HEADERS = () => new Headers({ 'content-type': 'application/json', 'cache-control': 'no-cache', 'x-access-token': CURRENT_USER().accessToken });
 export const AJAXHEADERS = { 'content-type': 'application/json', 'cache-control': 'no-cache', 'x-access-token': CURRENT_USER().accessToken };
 
-export const SITE_NAME = "NFT Workshop";
+export const SITE_NAME = "Blockchain-Based Auction System";
 export const SITE_LOGO = logo;
 export const REQUESTDATE_FORMAT = "YYYY-MM-DD HH:mm:ss";
 

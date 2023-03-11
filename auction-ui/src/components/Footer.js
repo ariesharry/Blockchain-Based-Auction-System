@@ -10,7 +10,7 @@ class Footer extends Component {
     render() {
         return (
             <div className="d-flex my-1 justify-content-center">
-                <span>&copy; {new Date().getFullYear()} Powered by <a href="https://chainyard.com/" target="_blank" rel="noopener noreferrer">Chainyard</a></span>
+                <span>&copy; {new Date().getFullYear()} Developed by <a href="http://enibly.com/" target="_blank" rel="noopener noreferrer">Aries Harry Pratama</a></span>
             </div>
         );
     }

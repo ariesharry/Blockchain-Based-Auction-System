@@ -22,6 +22,8 @@ import AuctionService from '../services/Auctions.js';
 import { SITE_NAME } from '../services/Constants';
 import { toast } from 'react-toastify';
 import BlockchainExplorer from './BlockchainExplorer';
+import ResponsiveDrawer from './Sidebar';
+import { Box } from '@mui/system';
 
 class ArtworkGrid extends Component {
 
@@ -160,42 +162,47 @@ class ArtworkGrid extends Component {
   render() {
     let { selectedArtwork, isShowingAllOpenAuctions, isBidding, yourArtwork, openAuctions } = this.state;
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-6 mb-3">
-            <h1 className="title text-primary">Dashboard</h1>
+      <>
+      <Box sx={{display: "flex"}}>
+        <ResponsiveDrawer />
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <h1 class="font-weight-bold" className="title text-dark">Dashboard</h1>
+            </div>
+            {this.state.newNotificationCount > 0 && <div className="col-md-6 mb-3 d-flex align-items-center justify-content-end">
+              <button type="button" className="btn btn-primary my-auto" onClick={this.reloadAuctions} data-toggle="tooltip" title="Click here to load new auctions.">
+                Refresh <span className="badge badge-danger">{this.state.newNotificationCount}</span>
+              </button>
+            </div>}
           </div>
-          {this.state.newNotificationCount > 0 && <div className="col-md-6 mb-3 d-flex align-items-center justify-content-end">
-            <button type="button" className="btn btn-primary my-auto" onClick={this.reloadAuctions} data-toggle="tooltip" title="Click here to load new auctions.">
-              Refresh <span className="badge badge-danger">{this.state.newNotificationCount}</span>
-            </button>
-          </div>}
+          <div className="row mb-3">
+            <div className="col-md-6">
+              <h5 className="text-muted">Open Auctions ({openAuctions.length})</h5>
+            </div>
+            <div className="col-md-6">
+              {openAuctions.length > 3 && <a className="float-right" href="#show" onClick={() => this.setState({ isShowingAllOpenAuctions: !this.state.isShowingAllOpenAuctions })}>{isShowingAllOpenAuctions ? 'Show less' : 'Show all'}</a>}
+            </div>
+          </div>
+          {this.renderOpenAuctions()}
+          <hr />
+          <div className="row mb-3 mt-5">
+            <div className="col-md-6">
+              <h5 className="text-muted">Your Artwork ({yourArtwork.length})</h5>
+            </div>
+            <div className="col-md-6">
+              <button className="btn btn-primary btn-sm float-right" type="button" data-toggle="modal" data-target=".new-artwork-modal">Add Artwork</button>
+            </div>
+          </div>
+          {this.renderYourArtwork()}
+          <ArtworkDetail nftID={this.state.nftID} isVisible={this.state.isViewingArtwork} isAuction={isBidding} auctionID={this.state.auctionID} buyItNowPrice={this.state.buyItNowPrice} reservePrice={this.state.reservePrice} closeDate={this.state.closeDate} handleCloseAuction={() => { this.getAllOpenAuctions(); this.getYourArtwork(); }} />
+          <NewArtwork addArtwork={this.addArtworkToState} />
+          <SubmitArtworkAuction nftID={this.state.nftID} nftIndex={this.state.nftIndex} selectedNft={this.state.selectedNft} updateArtwork={() => { this.getAllOpenAuctions(); this.getYourArtwork(); }} {...selectedArtwork} />
+          <TransferArtwork nftID={this.state.nftID} handleTransfer={() => this.getYourArtwork()} {...selectedArtwork} />
+          <div className="row"><BlockchainExplorer onSocketMessage={this.updateOnSocketMessage} /></div>
         </div>
-        <div className="row mb-3">
-          <div className="col-md-6">
-            <h5 className="text-muted">Open Auctions ({openAuctions.length})</h5>
-          </div>
-          <div className="col-md-6">
-            {openAuctions.length > 3 && <a className="float-right" href="#show" onClick={() => this.setState({ isShowingAllOpenAuctions: !this.state.isShowingAllOpenAuctions })}>{isShowingAllOpenAuctions ? 'Show less' : 'Show all'}</a>}
-          </div>
-        </div>
-        {this.renderOpenAuctions()}
-        <hr />
-        <div className="row mb-3 mt-5">
-          <div className="col-md-6">
-            <h5 className="text-muted">Your Artwork ({yourArtwork.length})</h5>
-          </div>
-          <div className="col-md-6">
-            <button className="btn btn-primary btn-sm float-right" type="button" data-toggle="modal" data-target=".new-artwork-modal">Add Artwork</button>
-          </div>
-        </div>
-        {this.renderYourArtwork()}
-        <ArtworkDetail nftID={this.state.nftID} isVisible={this.state.isViewingArtwork} isAuction={isBidding} auctionID={this.state.auctionID} buyItNowPrice={this.state.buyItNowPrice} reservePrice={this.state.reservePrice} closeDate={this.state.closeDate} handleCloseAuction={() => { this.getAllOpenAuctions(); this.getYourArtwork(); }} />
-        <NewArtwork addArtwork={this.addArtworkToState} />
-        <SubmitArtworkAuction nftID={this.state.nftID} nftIndex={this.state.nftIndex} selectedNft={this.state.selectedNft} updateArtwork={() => { this.getAllOpenAuctions(); this.getYourArtwork(); }} {...selectedArtwork} />
-        <TransferArtwork nftID={this.state.nftID} handleTransfer={() => this.getYourArtwork()} {...selectedArtwork} />
-        <div className="row"><BlockchainExplorer onSocketMessage={this.updateOnSocketMessage} /></div>
-      </div>
+      </Box>
+      </>
     );
   }
 

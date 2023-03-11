@@ -7,14 +7,14 @@
  */
 
 body {
-  margin: 0;
-  padding: 0;
+  margin: 5px;
+  padding: 5px;
   font-family: sans-serif;
 }
 
 footer {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 footer p {
@@ -218,7 +218,7 @@ td.artwork img {
   position: relative;
   width: auto;
   height: 50px;
-  background-color: #057aff;
+  background-color: #ffffff;
   float: left;
   margin-right: 15px;
   left: 9999px;

@@ -15,6 +15,8 @@ import DatePicker from "react-datepicker";
 import Moment from 'moment';
 import validator from 'validator';
 import { toast } from 'react-toastify';
+import ResponsiveDrawer from './Sidebar.js';
+import { Box } from '@mui/system';
 
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -246,7 +248,8 @@ class NewArtwork extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </div>    
+
     );
   }
 }

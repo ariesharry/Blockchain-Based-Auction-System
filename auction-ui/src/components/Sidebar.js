@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import AppsIcon from '@mui/icons-material/Apps';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -19,62 +20,168 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useLocation, useNavigate } from "react-router-dom";
+import Navbar from './Navbar';
+// import MenuAppBar from './Appbar';
 
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
+  const navigate = useNavigate();
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+ 
+  const location = useLocation(); // React Hook
+  const indexLoc = location.pathname;
+  console.log(indexLoc);
 
   const drawer = (
     <div>
-      <Toolbar />
-      <Divider />
-      <List>
-        {['Dashboard'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon sx= {{ color: '#FFFFFF' }}>
-                {<AppsIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+      
+      <Toolbar>
+        {/* <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={handleDrawerToggle}
+          sx={{ mr: 2, display: { sm: 'none' } }}
+        >
+          <MenuIcon />
+        </IconButton> */}
+        <Typography variant="h6" noWrap component="div" alignItems="center">
+          CPO Auction
+        </Typography>
+      </Toolbar>
+      <Divider
+        sx={{
+          borderColor: '#2D3748'
+        }}
+      />
+      <List>    
+        <ListItem>
+          <ListItemButton
+          selected={indexLoc === "/manageArtWork"}
+          // onClick={(event)=>{setSelectedIndex(1); navigate("/manageArtWork");}}
+          onClick={()=>{navigate("/manageArtWork")}}
+          >
+            <ListItemIcon sx= {{ color: '#FFFFFF' }}>
+              {<AppsIcon />}
+            </ListItemIcon>
+            <ListItemText primary= "Dashboard" />
+          </ListItemButton>    
+        </ListItem>
+        
+
+        <ListItem>
+          <ListItemButton
+          selected={indexLoc === "/manageAuctions"}
+          // onClick={(event)=>{setSelectedIndex(2); navigate("/manageAuctions");}}
+          onClick={()=>{navigate("/manageAuctions")}}
+          >
+            <ListItemIcon sx= {{ color: '#FFFFFF' }}>
+              <AccountBalanceIcon />
+            </ListItemIcon>
+            <ListItemText primary="Manage Auctions" />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem>
+          <ListItemButton
+          selected={indexLoc === "/"}
+          onClick={()=>{navigate("/manageAuctions")}}>
+            <ListItemIcon sx= {{ color: '#FFFFFF' }}>
+              <AddShoppingCartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Manage Bids" />
+          </ListItemButton>
+        </ListItem>
+        
+        <ListItem>
+          <ListItemButton
+          selected={indexLoc === "/"}
+          onClick={()=>{navigate("/manageAuctions")}}>
+            <ListItemIcon sx= {{ color: '#FFFFFF' }}>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem>
+          <ListItemButton
+          selected={indexLoc === "/"}
+          onClick={()=>{navigate("/manageAuctions")}}>
+            <ListItemIcon sx= {{ color: '#FFFFFF' }}>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItemButton>
+        </ListItem>
       </List>
-      <Divider />
-      <List>
-        {['Manage Auction', 'Manage Bid', 'Reporting', 'Login', 'Register'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon sx= {{ color: '#FFFFFF' }}>
-                {index % 2 === 0 ? <AnalyticsIcon /> : <BarChartIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      
+      <Box sx={{ px: 2, py: 3 }} >
+        <Box
+          sx={{
+            alignItems: 'center',
+            backgroundColor: 'rgba(255, 255, 255, 0.04)',
+            cursor: 'pointer',
+            display: 'flex',
+            justifyContent: 'space-between',
+            px: 3,
+            py: '11px',
+            borderRadius: 1
+          }}
+        >
+          <div>
+            <Typography
+              color="inherit"
+              variant="subtitle1"
+            >
+              CPO Auction System
+            </Typography>
+            <Typography
+              color="neutral.400"
+              variant="body2"
+            >
+              Version
+              {' '}
+              : Beta (Prototype)
+            </Typography>
+          </div>
+          {/* <SelectorIcon
+            sx={{
+              color: 'neutral.500',
+              width: 14,
+              height: 14
+            }}
+          /> */}
+        </Box>
+      </Box>
     </div>
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
+    
     <Box sx={{ display: 'flex' }}>
+      
       <CssBaseline />
-      <AppBar
+      
+      {/* <AppBar
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        {/* <Toolbar>
+        <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -87,8 +194,8 @@ function ResponsiveDrawer(props) {
           <Typography variant="h6" noWrap component="div">
             Blockchain-Based Auction System
           </Typography>
-        </Toolbar> */}
-      </AppBar>
+        </Toolbar>
+      </AppBar> */}
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -161,7 +268,9 @@ function ResponsiveDrawer(props) {
           posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography> */}
       </Box>
+      
     </Box>
+    
   );
 }
 

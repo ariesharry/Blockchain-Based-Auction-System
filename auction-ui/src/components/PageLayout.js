@@ -5,6 +5,7 @@ import Spinner from './Spinner.js';
 import Navbar from './Navbar.js';
 import Footer from './Footer';
 import { Outlet } from 'react-router-dom';
+import ResponsiveDrawer from './Sidebar';
 
 
 class PageLayout extends Component {
@@ -35,6 +36,7 @@ class PageLayout extends Component {
         return (
             <div>
                 <Navbar />
+                {/* <ResponsiveDrawer /> */}
                 <main role="main">
                     <div className="py-1 bg-light">
                         <Outlet/>

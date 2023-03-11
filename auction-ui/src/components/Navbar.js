@@ -29,7 +29,7 @@ class Navbar extends Component {
         <nav className="navbar navbar-light shadow-sm">
           <a className="navbar-brand" href='\'>
             <div className="d-flex justify-content-center align-items-center">
-              <img src={SITE_LOGO} alt="{SITE_NAME}" width="" height="40" />
+              <img src={SITE_LOGO} alt={SITE_NAME} width="" height="33" />
             </div>
           </a>
           <div className="dropdown">
